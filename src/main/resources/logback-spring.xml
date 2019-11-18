@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration scan="false" scanPeriod="30 seconds" debug="false">
+
+    <property name="LOG_HOME" value="${user.dir}/log" />
+
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{80}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="event" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/event.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/event.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+    <appender name="share" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/share.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/share.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+    <appender name="ad" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/ad.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/ad.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="server" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/server.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>7</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{80}:%L - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+
+    <appender name="cache" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/cache.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/cache.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH-mm-ss.SSS} [%logger] %p [%t] %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+
+    <appender name="exception" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/exception.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>log/exception.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>7</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{80}:%L - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+
+    <logger name="server">
+        <level value="INFO" />
+        <appender-ref ref="server" />
+    </logger>
+
+    <logger name="event">
+        <level value="INFO" />
+        <appender-ref ref="event" />
+    </logger>
+    <logger name="share">
+        <level value="INFO" />
+        <appender-ref ref="share" />
+    </logger>
+    <logger name="ad">
+        <level value="INFO" />
+        <appender-ref ref="ad" />
+    </logger>
+
+    <logger name="cache">
+        <level value="INFO" />
+        <appender-ref ref="cache" />
+    </logger>
+
+    <logger name="exception">
+        <level value="INFO" />
+        <appender-ref ref="exception" />
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="stdout" />
+        <appender-ref ref="server" />
+    </root>
+
+</Configuration>

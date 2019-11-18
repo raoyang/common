@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.login.dao.LoginMapper">
+
+    <select id="queryAppAndAccountId" resultType="com.game.login.domain.AppAccountLogin">
+        SELECT id, app_id as appId, account_id as accountId, login_time as loginTime, expire_time as expireTime
+        FROM app_account_login
+        WHERE account_id = #{accountId} AND app_id = #{appId}
+    </select>
+
+    <insert id="saveAppAccountLogin" parameterType="com.game.login.domain.AppAccountLogin" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO app_account_login (app_id, account_id, login_time, expire_time)
+        VALUES (#{appId}, #{accountId}, #{loginTime}, #{expireTime})
+    </insert>
+    
+    <update id="updateAppAccountLogin">
+        UPDATE app_account_login
+        SET login_time = #{loginTime}, expire_time = #{expireTime}
+        WHERE app_id = #{appId} AND account_id = #{accountId}
+    </update>
+</mapper>

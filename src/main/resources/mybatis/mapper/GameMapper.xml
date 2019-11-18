@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.game.dao.GameMapper">
+
+    <resultMap id="gameResult" type="com.game.game.domain.GameAllInfo">
+        <id property="id" javaType="INTEGER" column="id" />
+        <result property="gameId" column="game_id" />
+        <result property="gameStyle" column="game_style" />
+        <result property="gameType" column="game_type" />
+        <result property="runType" column="run_type" />
+        <result property="orientation" column="orientation" />
+        <result property="rankType" column="rank_type" />
+        <result property="microphone" column="microphone" />
+        <result property="memLimit" column="mem_limit" />
+        <result property="appVerLimit" column="app_ver_limit" />
+        <collection property="versions" ofType="com.game.game.domain.GameVersion">
+            <id property="id" javaType="INTEGER" column="gcid" />
+            <result property="versionCode" column="version_code" />
+            <result property="status" column="v_status" />
+            <result property="shieldCountry" column="shield_country" />
+            <result property="specifyCountry" column="specify_country" />
+            <result property="shieldPhoneType" column="shield_phone_type" />
+            <result property="specifyPhoneType" column="specify_phone_type" />
+            <result property="accountIds" column="account_ids" />
+            <result property="testNum" column="test_num" />
+            <result property="playerNum" column="player_num" />
+            <result property="cornerPos" column="corner_pos" />
+            <result property="cornerUrl" column="url" />
+            <result property="cornerType" column="type" />
+        </collection>
+    </resultMap>
+
+    <select id="queryById" resultMap="gameResult">
+        SELECT gi.id, gi.game_id, gi.game_style, game_type, run_type, ci.`url`, ci.corner_pos, ci.type, orientation, rank_type, gc.`version_code`,
+        gc.`v_status`, shield_country, specify_country, shield_phone_type, specify_phone_type, account_ids, test_num, player_num,
+        gc.id as gcid, microphone, mem_limit, app_ver_limit
+        FROM game_info gi
+        LEFT JOIN game_cfg gc ON gi.`game_id` = gc.`game_id` AND gc.`v_status` IN (1,2)
+        LEFT JOIN corner_info ci ON gc.`corner_id` = ci.`id`
+        WHERE gi.game_id = #{gameId}
+        ORDER BY gc.version_code DESC
+    </select>
+
+    <select id="queryLanByGameVersion" resultType="com.game.game.domain.GameLan">
+        SELECT game_id as gameId, version_code as versionCode, lan, name, icon, url, bg_icon as bgIcon,
+        color, md5
+        FROM game_ext_info
+        WHERE game_id = #{gameId} and version_code = #{versionCode}
+    </select>
+
+    <select id="queryGameCfg" resultType="com.game.game.domain.GameCfg">
+        SELECT game_id as gameId, data_config as dataConfig
+        FROM game_info
+        WHERE game_id = #{gameId}
+    </select>
+
+</mapper>

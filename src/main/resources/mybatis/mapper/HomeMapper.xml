@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.home.dao.HomeMapper">
+
+    <select id="queryAllAndRule" resultType="com.game.home.domain.HomeRule">
+        SELECT title, num_limit as numLimit, `more`, album_id as albumId, shield_country as shieldCountry,
+        specify_country as specifyCountry, shield_phone_type as shieldPhoneType, specify_phone_type as specifyPhoneType
+        FROM home_page hp
+        LEFT JOIN banner_album_cfg cfg
+        ON hp.album_id = cfg.album_banner_id
+        WHERE status = 1
+        ORDER BY asort DESC
+    </select>
+
+</mapper>

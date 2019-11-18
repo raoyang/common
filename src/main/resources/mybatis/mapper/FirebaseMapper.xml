@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.firebase.dao.FirebaseInfoDao">
+
+    <select id="queryByAccount" resultType="com.game.firebase.domain.FirebaseInfo">
+        SELECT account_id as accountId, firebase_id as firebaseId, firebase_token as firebaseToken
+         FROM firebase_info
+        WHERE account_id = #{accountId}
+    </select>
+
+    <insert id="insert" parameterType="com.game.firebase.domain.FirebaseInfo">
+        INSERT INTO firebase_info (account_id, firebase_id, firebase_token)
+        VALUES ( #{accountId}, #{firebaseId}, #{firebaseToken})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from firebase_info
+        where account_id = #{accountId}
+    </delete>
+
+    <update id="update" parameterType="com.game.firebase.domain.FirebaseInfo">
+        update firebase_info
+        <set>
+            <if test="firebaseId != null">
+                firebase_id = #{firebaseId} ,
+            </if>
+            <if test="firebaseToken != null">
+                firebase_token = #{firebaseToken}
+            </if>
+        </set>
+        where account_id = #{accountId}
+    </update>
+
+</mapper>

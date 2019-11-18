@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.friend.dao.FriendDao">
+
+    <select id="friends" resultType="java.lang.Integer" parameterType="int">
+        SELECT friendId FROM friend WHERE accountId = #{accountId} AND type = 0
+    </select>
+
+    <select id="blackList" resultType="com.game.friend.domain.BlackData" parameterType="int">
+        SELECT friendId as accountId, createTime as time FROM friend WHERE accountId = #{accountId} AND type = 1
+    </select>
+
+    <insert id="addFriend">
+        INSERT INTO friend (accountId, isFriend ,type, friendId, createTime) VALUES (#{accountId}, 1, 0, #{friendId}, #{time})
+    </insert>
+
+    <delete id="reFriend">
+        DELETE FROM friend WHERE accountId = #{accountId} AND friendId = #{friendId} AND type = 0
+    </delete>
+
+    <insert id="addBlackList">
+        INSERT INTO friend (accountId, isFriend, type, friendId, createTime) VALUES (#{accountId}, 0, 1, #{blackId}, #{time})
+    </insert>
+
+    <update id="friend2Black">
+        UPDATE friend
+        <set>
+          type = 1, createTime = #{time}
+        </set>
+        WHERE accountId = #{accountId} AND friendId = #{friendId}
+    </update>
+
+    <delete id="reBlack">
+        DELETE FROM friend WHERE accountId = #{accountId} AND friendId = #{friendId} AND type = 1
+    </delete>
+
+    <select id = "isFriend" resultType="int">
+        SELECT count(id) FROM friend WHERE accountId = #{accountId} AND friendId = #{searchId} AND type = 0
+    </select>
+
+    <select id = "isBlack" resultType="int">
+        SELECT count(id) FROM friend WHERE accountId = #{accountId} AND friendId = #{searchId} AND type = 1
+    </select>
+
+    <select id="beforeFriend" resultType="int">
+        SELECT count(id) FROM friend WHERE (accountId, friendId, type, isFriend) = (#{accountId}, #{searchId}, 1, 1);
+    </select>
+
+    <update id="black2Friend">
+        UPDATE friend
+        <set>
+            type = 0, createTime = #{time}
+        </set>
+        WHERE accountId = #{accountId} AND friendId = #{friendId}
+    </update>
+</mapper>

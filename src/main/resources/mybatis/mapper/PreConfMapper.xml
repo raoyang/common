@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.preconf.dao.PreConfMapper">
+
+    <select id="queryAll" resultType="com.game.preconf.domain.PreConf">
+        SELECT game_id as gameId, net
+         FROM pre_download_conf
+        WHERE status = 1
+    </select>
+
+</mapper>

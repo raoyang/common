@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.tool.dao.AIAccountMapper">
+
+    <insert id="BatchSaveAIAccount" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ai_account_info (header_img, nick_name, age, constellation, sex, address, birthday)
+        VALUES
+        <foreach collection="accounts" item="item" index="index" separator=",">
+            (#{item.headerImg}, #{item.nickName}, #{item.age}, #{item.constellation}, #{item.sex}, #{item.address}, #{item.birthday})
+        </foreach>
+
+    </insert>
+
+    <select id="queryById" resultType="com.game.account.domain.AccountInfo">
+        SELECT id, platform, header_img as headerImg,
+        nick_name as nickNameByte, age, constellation, sex, address as addressByte, birthday
+        FROM ai_account_info
+        WHERE id = #{accountId}
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.record.dao.AccountGameRecordMapper">
+
+    <select id="queryAccountGameRecord" resultType="com.game.favogame.domain.AccountGameRecord">
+        SELECT id, account_id as accountId, game_id as gameId, count,
+        created_at as createdAt, updated_at as updatedAt
+        FROM account_game_record
+        WHERE account_id = #{accountId}
+        ORDER BY count DESC
+        limit #{limit}
+    </select>
+
+    <update id="updateAccountGameRecord" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE account_game_record
+            <set>
+                <if test="item.count != 0">
+                    count = #{item.count},
+                </if>
+                <if test="item.updatedAt != null">
+                    updated_at = #{item.updatedAt},
+                </if>
+            </set>
+            WHERE account_id = #{item.accountId} and game_id = #{item.gameId}
+        </foreach>
+    </update>
+
+    <insert id="insertAccountGameRecord" parameterType="com.game.favogame.domain.AccountGameRecord" >
+        INSERT INTO account_game_record (account_id, game_id, count, created_at, updated_at)
+        VALUES ( #{accountId}, #{gameId}, #{count}, #{createdAt}, #{updatedAt})
+    </insert>
+</mapper>

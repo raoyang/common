@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.ad.dao.AdMapper">
+
+    <select id="queryByGame" resultType="com.game.ad.domain.AdConf">
+        SELECT ad_id as id, type
+        FROM game_ad_config
+        WHERE game_id = #{gameId} AND app_id = #{appId}
+    </select>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.account.dao.PhotoWallMapper">
+
+    <insert id="insertPhotoUrl" parameterType="com.game.account.domain.PhotoWallInfo">
+        INSERT INTO photo_wall (accountId, photo) VALUES(#{accountId}, #{photo})
+    </insert>
+
+    <select id="getPhotoWalls" resultType="java.lang.String">
+        SELECT photo from photo_wall where accountId = #{accountId}
+    </select>
+
+    <delete id="updatePhotoUrl" parameterType="com.game.account.domain.PhotoWallInfo">
+        UPDATE photo_wall
+        <set>
+            photo = #{photo}
+        </set>
+        WHERE accountId = #{accountId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.album.dao.AlbumMapper">
+
+    <select id="queryAlbumContent" resultType="String">
+        <bind name="offset" value="(page - 1) * limit"/>
+        SELECT related_game as gameId
+         FROM album
+        WHERE status = 1
+        AND album_id = #{albumId}
+        ORDER BY weight DESC
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countAlbumContent" resultType="int">
+         SELECT count(1) FROM album
+        WHERE status = 1
+        AND album_id = #{albumId}
+    </select>
+
+</mapper>

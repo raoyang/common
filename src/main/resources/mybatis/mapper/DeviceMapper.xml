@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.device.dao.DeviceMapper">
+
+    <insert id="saveDeviceInfo" parameterType="com.game.device.domain.Device">
+        INSERT INTO dev_info (account_id, app_ver, ch, client_id, product, brand, is_abroad, os_ver, cpu_id, aid, region, uuid)
+        VALUES (#{accountId}, #{appVer}, #{ch}, #{clientId}, #{devModel}, #{devBrand}, #{isAbroad}, #{osVer}, #{cpuId}, #{aId}, #{region}, #{uuid})
+    </insert>
+
+    <select id="countByUUId" resultType="int">
+        SELECT count(id) FROM dev_info
+        WHERE uuid = #{uuid}
+    </select>
+
+    <update id="updateDiviceInfo">
+        update dev_info
+        <set>
+            account_id = #{accountId}
+        </set>
+        where uuid = #{uuid}
+    </update>
+
+</mapper>
